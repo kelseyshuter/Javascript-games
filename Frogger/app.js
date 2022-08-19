@@ -1,11 +1,13 @@
-const timeLeftDisplay = document.querySelector('#time-left')
-const resultDisplay = document.querySelector('#result')
-const startPauseButton = document.querySelector('#start-pause-button')
-const squares = document.querySelectorAll('.grid div')
-const logsLeft = document.querySelectorAll('.log-left')
-const logsRight = document.querySelectorAll('.log-right')
-const carsLeft = document.querySelectorAll('.car-left')
-const carsRight = document.querySelectorAll('.car-right')
+const timeLeftDisplay = document.querySelector('#time-left');
+const resultDisplay = document.querySelector('#result');
+const startPauseButton = document.querySelector('#start-pause-button');
+const restartButton = document.querySelector('#restart-button');
+const squares = document.querySelectorAll('.grid div');
+const logsLeft = document.querySelectorAll('.log-left');
+const logsRight = document.querySelectorAll('.log-right');
+const carsLeft = document.querySelectorAll('.car-left');
+const carsRight = document.querySelectorAll('.car-right');
+let pause = true;
 
 let currentIndex = 76
 const width = 9
@@ -13,26 +15,32 @@ let timerId
 let outcomeTimerId
 let currentTime = 20
 
+//move player
 function moveFrog(e) {    
     squares[currentIndex].classList.remove('frog')
 
     switch(e.key) {
         case 'ArrowLeft' :
+        case 'a' :
             if (currentIndex % width !== 0) currentIndex -= 1 
             break
         case 'ArrowRight' :
+        case 'd' :
             if (currentIndex % width < width - 1) currentIndex += 1
             break
         case 'ArrowUp' :
+        case 'w' :
             if (currentIndex - width >= 0) currentIndex -= width            
             break
         case 'ArrowDown' :
+        case 's':
             if (currentIndex + width < width * width) currentIndex += width
             break
     }
     squares[currentIndex].classList.add('frog')
 }
 
+//move logs and cars
 function autoMoveElements() {
     currentTime--
     timeLeftDisplay.textContent = currentTime
@@ -42,6 +50,7 @@ function autoMoveElements() {
     carsRight.forEach(carRight => moveCarRight(carRight))    
 }
 
+//check for result
 function checkOutcomes() {
     lose()
     win()
@@ -136,7 +145,7 @@ function lose() {
         squares[currentIndex].classList.contains('c1') ||
         squares[currentIndex].classList.contains('l4') ||
         squares[currentIndex].classList.contains('l5') ||
-        currentTime <= 0
+        (currentTime <= 0 && pause===false)
         ) {
         resultDisplay.textContent = 'You lose!'
         clearInterval(timerId)
@@ -153,17 +162,30 @@ function win() {
     }
 }
 
-startPauseButton.addEventListener('click', () => {
-    if (timerId) {
-        clearInterval(timerId)
+function pauseGame() {
+    clearInterval(timerId)
         timerId = null
         document.removeEventListener('keyup', moveFrog)
-
+        pause = true
+}
+startPauseButton.addEventListener('click', () => {
+    if (timerId) {        
+        pauseGame()
     } else {
         timerId = setInterval(autoMoveElements, 1000)
         outcomeTimerId = setInterval(checkOutcomes, 50)
         document.addEventListener('keyup', moveFrog)
+        pause = false
     }
+})
+
+restartButton.addEventListener('click', () => {
+    currentTime = 20
+    timeLeftDisplay.textContent = currentTime
+    squares[currentIndex].classList.remove('frog')    
+    currentIndex = 76
+    squares[currentIndex].classList.add('frog')
+    pauseGame()
 })
 
 

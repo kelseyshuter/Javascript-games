@@ -1,9 +1,22 @@
+html {
+    font-family: 'Courier New';
+    background-color: lightgreen;
+}
+
+header {
+    text-align: center;
+    padding: 20px;
+}
+
 .grid {
-    border: 1px solid black;
+    background-color: purple;
+    border: 25px solid black;
+    border-radius: 10px;
     height: 180px;
     width: 180px;
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
 }
 
 .grid div {
