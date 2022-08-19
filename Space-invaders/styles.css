@@ -1,0 +1,65 @@
+html {
+    background-color: grey;
+    font-family: 'Courier New', serif;
+}
+
+.grid {
+    width: 300px;
+    height: 300px;
+    border: solid black 20px;
+    border-radius: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: auto;
+    background-color: lightgreen;
+}
+
+.header {;
+    width: 300px;
+    margin: auto;
+    
+}
+
+.header h1 {
+    padding-left: 15px;
+}
+
+.header h2 {
+    padding: 10px;
+    text-align: center;
+}
+
+header .game-over {
+    margin-bottom: 0;
+}
+
+button {
+    width: 300px;
+    border-radius: 10px;
+    background-color: orange;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.grid div {
+    width: 20px;
+    height: 20px;
+}
+
+.invader {
+    background-color: purple;
+    border-radius: 10px;
+}
+
+.shooter {
+    background-color: blue;
+}
+
+.laser {
+    background-color: orange;
+}
+
+.boom {
+    background-color: red;
+}
