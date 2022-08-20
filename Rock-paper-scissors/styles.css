@@ -1,0 +1,72 @@
+html {
+    font-family: Helvetica, sans-serif;
+    background-color: lightpink;
+}
+
+.intro {
+    text-align: center;
+    margin-top: 20px;
+    background-color: palevioletred;
+    border: 20px solid palevioletred;
+    border-radius: 10px;
+    font-style: italic;
+}
+
+h1 {    
+    padding: 10px;   
+    
+}
+
+.pictures {
+    width: 100%;
+    height: 30vh;
+    background-color: lightblue;
+    margin: 10px auto;
+}
+
+.choice-display, 
+.player-computer {
+    background-color: lightgray;
+    display: flex;
+}
+
+.computer, 
+.player, 
+#player-choice, 
+#computer-choice {
+    padding: 20px;
+    width: 49%;
+    text-align: center;
+}
+
+
+.display-result {
+    background-color: grey;
+    color: white;
+    padding: 8px;
+    margin: 10px auto;
+    text-align: center;
+    min-height: 8vh;    
+}
+
+
+
+.choice-buttons {
+    width: 98%;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    height: 100px;
+    width: 200px;
+    font-size: 30px;
+    margin: 10px;
+    border-radius: 20%;
+}
+
+
+.winner {
+    background-color: purple;
+    color: white;
+}
