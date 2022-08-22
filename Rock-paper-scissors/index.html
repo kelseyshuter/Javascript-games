@@ -5,31 +5,51 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Rock Paper Scissors</title>
         <link rel="stylesheet" href="styles.css" />
+        <script src="https://kit.fontawesome.com/e61363cb15.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <div class="intro">
-            <h1>Rock, Paper, Scissors</h1>
+            <h1>
+                <span class="title-rock">Rock</span>
+                <span class="title-paper">Paper</span>
+                <span class="title-scissors">Scissors</span>
+            </h1>
         </div>
         <div class="display-result">
             <h2> <span id="result"></span></h2> 
         </div> 
         <div class="pictures">
-
+            <div class="player-picture"></div>
+            <div class="computer-picture"></div>
         </div>
-        <div class="player-computer">
-            <h2 class="player">Your Choice: </h2>
-            <h2 class="computer">Computer Choice: </h2>                        
+        <div class="container">
+            <div class="player-computer">
+                <h2 class="player">You: </h2>
+                <h2 class="computer">Computer: </h2>                        
+            </div>  
+            <div class="choice-display">
+                <h2 id="player-choice">???</h2>
+                <h2 id="computer-choice">???</h2>
+            </div>   
+        </div>
+         
+        <div class="button-container">
+            <div class="choice-buttons">
+                <button id="rock">
+                    <i id="rock" class="fa-regular fa-hand-back-fist fa-rotate-90"></i>
+                </button>
+                <button id="paper">
+                    <i id="paper" class="fa-regular fa-hand fa-rotate-90"></i>
+                </button>
+                <button id="scissors">
+                    <i id="scissors" class="fa-regular fa-hand-scissors fa-flip-horizontal"></i>
+                </button>
+            </div> 
+            <div class="start-button">
+                <button id="start" disabled>Start</button>
+            </div>  
         </div>  
-        <div class="choice-display">
-            <h2 id="player-choice">???</h2>
-            <h2 id="computer-choice">???</h2>
-        </div>                               
-        <div class="choice-buttons">
-            <button id="rock">rock</button>
-            <button id="paper">paper</button>
-            <button id="scissors">scissors</button>
-        </div>        
- 
+
         <script src="app.js" charset="utf-8"></script>        
     </body>    
 </html>
