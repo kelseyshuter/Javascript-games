@@ -113,13 +113,13 @@ function winnerColor() {
             playerBox.classList.add('loser')
             if (playerChoice === 'rock') {
                 playerPicture.classList.add('rock-picture-loser')
-                computerPicture.classList.add('scissors-picture-winner-right')
+                computerPicture.classList.add('paper-picture-winner-right')
             } else if (playerChoice === 'paper') {
                 playerPicture.classList.add('paper-picture-loser')
-                computerPicture.classList.add('rock-picture-winner')
+                computerPicture.classList.add('scissors-picture-winner')
             } else if (playerChoice === 'scissors') {
                 playerPicture.classList.add('scissors-picture-loser-left')
-                computerPicture.classList.add('paper-picture-winner-right')
+                computerPicture.classList.add('rock-picture-winner-right')
             }
 
         }    
