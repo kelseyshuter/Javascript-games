@@ -92,7 +92,14 @@ function restartGame() {
     createBoard()
 }
 
-restartButton.addEventListener('click', restartGame)
+function warningMessage() {
+    let answer = window.confirm("Restart?")
+    if (answer) {
+        restartGame()
+    }
+}
+
+restartButton.addEventListener('click', warningMessage)
 
 function checkMatch() {
     const cards = document.querySelectorAll('img')

@@ -99,6 +99,10 @@ body {
     border: 2px solid var(--light-blue);
 }
 
+.card:hover {
+    cursor: pointer;
+}
+
 .move-back {
     z-index: -1;
 }
@@ -118,6 +122,10 @@ body {
     border-radius: 2px;
     font-size: 20px;
     box-shadow: 2px 2px var(--light-blue);
+}
+
+#restart-button:hover {
+    cursor: pointer;
 }
 
 .page-bottom {
