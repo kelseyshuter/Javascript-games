@@ -5,13 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Memory Game</title>
     <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script src="https://kit.fontawesome.com/e61363cb15.js" crossorigin="anonymous"></script>
+    <link href='https://fonts.googleapis.com/css?family=Emilys Candy' rel='stylesheet'>
   </head>
   <body>
-
-    <h3>Score: <span id="result"></span></h3>
-
-    <div id="grid"></div>
-
+    <div class="intro">
+      <h1 class="title">
+        <i class="fa-solid fa-ice-cream"></i>
+         MEMORY GAME 
+        <i class="fa-solid fa-ice-cream"></i>        
+      </h1>
+    </div>
+    <div class="divider">
+      <div class="bow"></div>
+    </div>
+    <div class="container">
+      <div class="score-box">
+        <h3>Score: <span id="result">0</span></h3>
+        <h3>Attempts: <span id="attempt">0</span></h3>
+      </div>    
+      <div id="grid"></div>
+      <div class="message-box">Find the matching pairs!</div>
+      <div class="button-box">
+        <button id="restart-button">RESTART</button>
+      </div>
+    </div>
+    
+    <div class="page-bottom"></div>
     <script src="app.js"></script>
   </body>
 </html>

@@ -1,6 +1,186 @@
-#grid {
+* {
+    --intro-pink: #f452a3;
+    --light-blue: #87cefa;
+    --white: #f5f5f5;
+    --gradient: linear-gradient(to top, #ffffff,
+     #f3f3ff, #e2e9ff, #cde0ff, #b3d8fe,
+      #b3d8fe, #b3d8fe, #b3d8fe, #cde0ff,
+       #e2e9ff, #f3f3ff, #ffffff);
+}
+
+
+html {    
+    text-align: center;    
+    color: var(--intro-pink);
+    text-shadow: 2px 2px var(--light-blue);
+    font: 400 30px 'Emilys Candy', serif;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    /* background-color: white; */
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+.container {
+    background-image: var(--gradient);
+}
+.intro {
+    height: 200px;
+    width: 100vw;
+    display: flex;
+    margin: auto;
+    background-image: url(./images/candy-drip.jpg);
+    background-size: contain;
+}
+
+.title {
+    width: 100%;
+    height: 50%;
+    justify-content: center;
+    border-radius: 0 0 50% 50%;
+    color: var(--intro-pink);
+    margin: 80px 0 0;
+}
+
+.fa-ice-cream {
+    color: var(--light-blue);
+    font-size: 50px;
+    text-shadow: 2px 2px var(--intro-pink);
+}
+
+.divider {
+    position: absolute;
+    top: 150px;
+    height: 65px;
+    width: 100%;
+    
+}
+
+.bow {
+    height: 100%;
+    width: 440px;
+    background-image: url(./images/divider-bow.png);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 0;
+    margin: auto;
+}
+
+.score-box {
+    height: 80px;
     width: 400px;
-    height: 300px;
+    margin: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#grid {
+    width: 480px;
+    height: 380px;
     display: flex;
     flex-wrap: wrap;
+    margin: auto;
+    background-image: url(./images/frosting.jpg);
+    background-size: cover;
+    border-radius: 10%;
+    box-shadow: 2px 2px var(--light-blue);
+    justify-content: center;
+    align-content: center;
+}
+
+.card {
+    border: 2px solid var(--light-blue);
+}
+
+.move-back {
+    z-index: -1;
+}
+
+.message-box {
+    height: 75px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#restart-button {
+    font-family: 'Emilys Candy';
+    background-color: var(--light-blue);
+    border: 4px solid var(--intro-pink);
+    border-radius: 2px;
+    font-size: 20px;
+    box-shadow: 2px 2px var(--light-blue);
+}
+
+.page-bottom {
+    height: 40vh;
+    max-height: 500px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-image: url(./images/sprinkles.jpg);
+    background-repeat:repeat-x;
+    background-size: contain;
+    z-index: -1;
+}
+
+@media only screen and (max-width: 600px) {
+    html {
+        font-size: 15px;
+    }
+    .intro {
+        height: 120px;
+    }
+    .title {
+        margin: 60px 0 0;
+    }
+    .fa-ice-cream {
+        font-size: 20px;
+    }
+    .divider {
+        top: 80px;
+    }
+    .bow {
+        width: 220px;
+    }
+    .score-box {
+        width: 200px;
+        height: 50px;
+    }
+    #grid {
+        width: 240px;
+        height: 190px;
+        border-width: 20px;
+    }
+    img {
+        height: 50px;
+        width: 50px;
+    }
+    .message-box {
+        height: 40px;
+    }
+    .page-bottom {
+        height: 400px;
+        background-size: cover;
+    }
+}
+
+@media only screen and (max-height: 800px) {
+    .page-bottom {
+        height: 250px;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    html {
+        font-size: 10px;
+    }
 }
