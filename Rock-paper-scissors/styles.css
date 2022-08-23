@@ -110,13 +110,11 @@ h1 {
 }
 
 .player-picture, .computer-picture {
-    border: 1px solid white;
-    border-radius: 50%;
     width: 40%;
     height: 85%;    
     margin: auto;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
 }
 
 .container {
@@ -245,36 +243,29 @@ button:hover {
     background-image: url(./images/rock-loser-sm.png);
 }
 
-.paper-picture-winner-left {
+.paper-picture-winner {
     background-image: url(./images/paper-winner-left-sm.png);
-}
-
-.paper-picture-winner-right {
-    background-image: url(./images/paper-winner-right-sm.png);
 }
 
 .paper-picture-loser {
     background-image: url(./images/paper-loser-sm.png);
 }
 
-.scissors-picture-winner-left {
+.scissors-picture-winner {
     background-image: url(./images/scissors-winner-left-sm.png);
 }
 
-.scissors-picture-winner-right {
-    background-image: url(./images/scissors-winner-right-sm.png);
-}
-
-.scissors-picture-loser-left {
+.scissors-picture-loser {
     background-image: url(./images/scissors-loser-left-sm.png);
 }
 
-.scissors-picture-loser-right {
-    background-image: url(./images/scissors-loser-right-sm.png);
+.picture-right {
+    transform: scaleX(-1);
 }
 
+
 /* for mobile view */
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 850px) {
     .intro h1 {
         font-size: 20px;
     }
@@ -315,5 +306,18 @@ button:hover {
     }
     .fa-regular {
         font-size: 42px;
+    }
+}
+
+
+@media only screen and (min-width: 850px) {
+    html {
+        margin: 20px 20vw;
+    }
+}
+
+@media only screen and (min-width: 1600px) {
+    html {
+        margin: 20px 30vw;
     }
 }

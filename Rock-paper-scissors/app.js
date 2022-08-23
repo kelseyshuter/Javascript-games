@@ -18,24 +18,20 @@ function clearImages() {
     playerPicture.classList.remove(
         'rock-picture-winner',
         'rock-picture-loser',
-        'paper-picture-winner-left',
-        'paper-picture-winner-right',
+        'paper-picture-winner',
         'paper-picture-loser',
-        'scissors-picture-winner-left',
-        'scissors-picture-winner-right',
-        'scissors-picture-loser-left',
-        'scissors-picture-loser-right'
+        'scissors-picture-winner',
+        'scissors-picture-loser',
+        'picture-right'
     )
     computerPicture.classList.remove(
         'rock-picture-winner',
         'rock-picture-loser',
-        'paper-picture-winner-left',
-        'paper-picture-winner-right',
+        'paper-picture-winner',
         'paper-picture-loser',
-        'scissors-picture-winner-left',
-        'scissors-picture-winner-right',
-        'scissors-picture-loser-left',
-        'scissors-picture-loser-right'
+        'scissors-picture-winner',
+        'scissors-picture-loser',
+        'picture-right'
     )
 
 }
@@ -96,12 +92,12 @@ function winnerColor() {
             computerBox.classList.add('loser')
                 if (playerChoice === 'rock') {
                     playerPicture.classList.add('rock-picture-winner')
-                    computerPicture.classList.add('scissors-picture-loser-right')
+                    computerPicture.classList.add('scissors-picture-loser','picture-right')
                 } else if (playerChoice === 'paper') {
-                    playerPicture.classList.add('paper-picture-winner-left')
+                    playerPicture.classList.add('paper-picture-winner')
                     computerPicture.classList.add('rock-picture-loser')
                 } else if (playerChoice === 'scissors') {
-                    playerPicture.classList.add('scissors-picture-winner-left')
+                    playerPicture.classList.add('scissors-picture-winner')
                     computerPicture.classList.add('paper-picture-loser')
                 }
 
@@ -113,13 +109,13 @@ function winnerColor() {
             playerBox.classList.add('loser')
             if (playerChoice === 'rock') {
                 playerPicture.classList.add('rock-picture-loser')
-                computerPicture.classList.add('paper-picture-winner-right')
+                computerPicture.classList.add('paper-picture-winner','picture-right')
             } else if (playerChoice === 'paper') {
                 playerPicture.classList.add('paper-picture-loser')
-                computerPicture.classList.add('scissors-picture-winner')
+                computerPicture.classList.add('scissors-picture-winner','picture-right')
             } else if (playerChoice === 'scissors') {
-                playerPicture.classList.add('scissors-picture-loser-left')
-                computerPicture.classList.add('rock-picture-winner-right')
+                playerPicture.classList.add('scissors-picture-loser')
+                computerPicture.classList.add('rock-picture-winner','picture-right')
             }
 
         }    
@@ -136,8 +132,8 @@ function winnerColor() {
             playerPicture.classList.add('paper-picture-loser')
             computerPicture.classList.add('paper-picture-loser')
         } else if (playerChoice === 'scissors') {
-            playerPicture.classList.add('scissors-picture-loser-left')
-            computerPicture.classList.add('scissors-picture-loser-right')
+            playerPicture.classList.add('scissors-picture-loser')
+            computerPicture.classList.add('scissors-picture-loser','picture-right')
         }
     }
     
