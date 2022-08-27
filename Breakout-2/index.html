@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/e61363cb15.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+  </head>
+  <body>
+    <div class="arcade-top">
+        <label class="title">Breakout</label>
+    </div>
+    <div class="arcade-wrapper">
+        <div class="arcade-trapezoid"></div>
+        <div class="arcade-middle">
+            <div class="grid-box">
+                <div class="top-display">                
+                    <label class="score-display">
+                        Score: 
+                        <span class="score-value">0</span>
+                    </label>
+                    <div class="health-display">
+                        <label class="health-value-1">
+                            <i class="fa-solid fa-heart"></i>
+                        </label>
+                        <label class="health-value-2">
+                            <i class="fa-solid fa-heart"></i>
+                        </label>
+                    </div>                
+                    <label class="level-display">Lvl. </label>
+                </div>
+                <div class="game-grid">
+                    <div class="grid"></div>
+                    <div class="message-div">
+                        <div class="level-select-box">
+                            <i class="fa-solid fa-caret-left"></i>
+                            <span id="select-level-display">Lvl.1</span>
+                            <i class="fa-solid fa-caret-right"></i>
+                        </div>                        
+                        <span id="message-box">Select Level</span>
+                        <span id="instructions-box">Use arrows and green</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons-trapezoid">
+            <div class="joystick">
+                <div class="joystick-ball"></div>                
+                <div class="joystick-stick"></div>
+                <div class="joystick-base"></div>
+            </div>
+            <div class="arrow-buttons">
+                <i id="left-button" class="fa-solid fa-square-caret-left"></i>
+                <i id="right-button" class="fa-solid fa-square-caret-right"></i>            </div>
+            <div class="select-buttons">
+                <i id="green-select-button" class="fa-solid fa-circle-dot"></i>                
+                <i id="red-restart-button" class="fa-solid fa-circle-dot"></i>                
+            </div>
+        </div>
+        </div>
+    <div class="arcade-divider"></div>
+    <div class="bottom-trapezoid"></div>
+    <div class="bottom-box"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

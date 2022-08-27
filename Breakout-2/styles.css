@@ -1,0 +1,370 @@
+:root {
+    --top-width1: 350px;
+    --top-height1: 70px;
+    --middle-width1: 300px;
+    --middle-height1: 240px;
+    --arcade-color-main: navy;
+    --arcade-color-accent: deepskyblue;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-family: 'Press Start 2P', monospace;
+    color: white;
+    background-image: url(./images/arcade-background3.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: black;
+}
+
+/* top */
+.arcade-top {
+    height: var(--top-height1);
+    width: var(--top-width1);
+    margin: 10vh auto 0;
+    border: 4px solid whitesmoke;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--arcade-color-main);
+}
+
+.title {
+    font-size: 35px;
+    text-transform: uppercase;
+    color: fuchsia;
+    text-shadow: 2px 2px 2px white;
+}
+
+/* middle */
+.arcade-wrapper {
+    width: var(--top-width1);
+    margin: auto;
+    background-color: #707070;
+    border: 4px solid black;
+    border-radius: 10px;
+}
+.arcade-trapezoid {
+    width: var(--top-width1);
+    margin: auto;
+    border-top: 20px solid midnightblue;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    box-sizing: border-box;
+}
+
+.arcade-middle {
+    height: var(--middle-height1);
+    width: var(--middle-width1);
+    margin: auto;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: flex;
+    background-color: var(--arcade-color-accent);
+
+}
+
+.grid-box {
+    height: 200px;
+    width: 270px;
+    margin: auto;
+    border: 2px solid white;
+    background-color: black;
+    box-shadow: 0 2px 8px 4px white;
+
+}
+
+.top-display {
+    font-size: 12px;
+    height: 10%;
+    width: 100%;
+    margin: 4px auto 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.fa-heart {
+    color: red;
+}
+
+.game-grid {
+    height: 90%;
+    width: 100%;   
+}
+
+.grid {
+    height: 100%;
+    width: 100%;
+}
+
+.message-div {
+    font-size: 15px;
+    text-transform: uppercase;
+    position: relative;
+    top: -120px;
+    width: 100%;
+    height: 40%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+}
+
+#instructions-box {
+    font-size: 10px;
+}
+
+/* buttons */
+.buttons-trapezoid {
+    height: 0px;
+    width: var(--top-width1);
+    margin: auto;
+    border-bottom: 80px solid #383838;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.joystick {
+    position: relative;
+    height: 80px;
+    width: 25px;
+    top: -15px;
+    left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}
+
+.joystick-ball {
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    position: relative;
+    top: 4px;
+    background: radial-gradient(
+        lightblue 0, darkblue 40%
+    )
+        
+}
+
+.joystick-stick {
+    height: 20px;
+    width: 5px;
+    background-color: black;
+    position: relative; 
+    top: 2px;
+    border-radius: 20%;
+}
+
+.joystick-base {
+    height: 15px;
+    width: 25px;   
+    border-radius: 50%;
+    background-color: darkblue;
+    background: radial-gradient(
+    circle at center,
+    black 0, darkblue 75%    
+    )
+}
+
+.arrow-buttons {
+    position: relative;
+    top: 14px;
+    left: 75px;
+}
+
+#left-button, #right-button {
+    font-size: 40px;
+    color: yellow;
+    background-color: pink;
+    padding: 5px;
+    border-radius: 25%;
+}
+
+#left-button:hover, #right-button:hover {
+    box-shadow: 0 0 2px 2px white;
+    cursor: pointer;
+}
+
+.select-buttons {
+    height: 70px;
+    width: 70px;
+    position: relative;
+    top: 10px;
+    left: 95px;    
+}
+
+#green-select-button, #red-restart-button {
+    font-size: 30px;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+#green-select-button {
+    color: limegreen;    
+    margin-right: 3px;
+    
+}
+
+#green-select-button:hover {
+    cursor: pointer;
+    box-shadow: 0 0 2px 2px lime;    
+}
+
+#red-restart-button {
+    color: red;
+    position: relative;
+    left: 25px;
+}
+
+#red-restart-button:hover {
+    box-shadow: 0 0 2px 2px orange;
+    cursor: pointer;
+}
+
+/* bottom */
+.arcade-divider {
+    height: 10px;
+    width: var(--top-width1);
+    margin: auto;
+    background-color: gray;
+    border-left: 4px solid black;
+    border-right: 4px solid black;
+    border-bottom: 4px solid black;
+}
+
+.bottom-trapezoid {
+    width: var(--top-width1);
+    margin: auto;
+    border-top: 40px solid var(--arcade-color-main);
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    box-sizing: border-box;
+}
+
+.bottom-box {
+    width: var(--middle-width1);
+    height: 80px;
+    margin: auto;
+    background-image: linear-gradient(var(--arcade-color-main), black);
+}
+
+.send-back {
+    z-index: -1;
+}
+
+
+/* inside grid */
+.ball {
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: yellow;
+}
+
+
+
+
+
+
+
+
+
+
+/* For larger screen sizes */
+@media only screen and (min-width: 750px) and (min-height: 600px) {
+    :root {
+        --top-height1: 120px;
+        --top-width1: 600px;
+        --middle-height1: 440px;
+        --middle-width1: 550px;
+    }
+    
+    .title {
+        font-size: 60px;
+    }
+    
+    .grid-box {
+        border: 4px solid white;
+        height: 378px;
+        width: 500px;
+    }
+    .top-display {
+        font-size: 18px;
+    }
+    
+    .message-div {
+        top: -220px;
+        font-size: 25px;
+    }
+    #instructions-box {
+        font-size: 14px;
+    }
+    .game-grid {
+        height: 340px;
+    }
+    .joystick {
+        height: 100px;
+        width: 45px;
+        top: -25px;
+        left: 40px;
+    }
+    .joystick-ball {
+        height: 35px;
+        width: 35px;
+    }
+    .joystick-stick {
+        height: 30px;
+        width: 8px;
+    }
+    .joystick-base {
+        height: 25px;
+        width: 45px;
+    }
+
+    .arrow-buttons {
+        top: 12px;
+        left: 170px;
+    }
+    
+    #left-button, #right-button {
+        font-size: 45px;
+    }
+    
+    .select-buttons {
+        top: 4px;
+        left: 250px;
+    }
+    
+    #green-select-button {
+        font-size: 35px;
+    }
+    
+    #red-restart-button {
+        font-size: 35px;
+        left: 40px;
+        top: -10px;
+    }
+
+    .bottom-trapezoid {
+        border-top: 150px solid var(--arcade-color-main);        
+        height: 0;
+    }
+    .bottom-box {
+        height: 100px
+    }
+}

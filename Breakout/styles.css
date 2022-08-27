@@ -1,9 +1,107 @@
+* {
+    --game-height1: 300px;
+    --game-width1: 560px;
+    --game-height2: 150px;
+    --game-width2: 280px;
+    --block-width1: 100px;
+    --block-height1: 20px;
+    --block-width2: 50px;
+    --block-height2: 10px;     
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    text-transform: uppercase;
+    font: 100 20px 'Press Start 2P', monospace;
+    color: yellow;
+    text-shadow: 0 0 2px orange;
+    background-color: black;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+}
+
+.blank-space {
+    height: 40px;
+    width: 100%;
+}
+
+.intro {
+    height: 100px;
+    width: var(--game-width1);
+    margin: 0 auto;
+    
+}
+
+.page-title {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.start-box {
+    height: 40px;
+    width: var(--game-width1);
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#start-button {
+    height: 100%;
+    width: 200px;
+    font: 100 10px 'Press Start 2P', monospace;
+    /* animation: animate 1.5s linear infinite; */
+}
+
+.score-box {
+    height: 50px;
+    width: var(--game-width1);
+    margin: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+}
+
+.score, .level {
+    height: 20px;
+    text-align: center;
+}
+
+.score {
+    display: flex;
+}
+
+.level {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.grid-box {
+    display: flex;
+    width: 100%;
+    height: var(--game-height1);
+    justify-content: center;
+    flex-direction: row;
+    
+}
+
 .grid {
     position: absolute;
-    width: 560px;
-    height: 300px;
-    border: solid black 1px;
-    margin-top: 80px;
+    width: var(--game-width1);
+    height: var(--game-height1);
+    border: solid yellow 1px;
+    box-sizing: border-box;
 }
 
 .block {
@@ -24,6 +122,96 @@
     position: absolute;
     width: 20px;
     height: 20px;
-    border-radius: 10px;
+    border-radius: 50%;
     background-color: red;
+}
+
+.arrows {
+    width: var(--game-width1);
+    height: 75px;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     
+}
+
+#left-arrow, #right-arrow {
+    color:pink;
+    margin: 0 15px;
+    border-radius: 50%;
+}
+
+.fa-solid {
+    font-size: 40px;
+}
+
+.level-select {
+    width: var(--game-width1);
+    height: 40px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.level-button {
+    font-size: 22px;
+    text-transform: uppercase;
+    font: 100 20px 'Press Start 2P', monospace;
+    margin: 0 10px;
+}
+
+@media only screen and (max-width: 600px), (max-height: 700px) {
+    html {
+        font-size: 15px;
+    }
+    .blank-space {
+        height: 30px;
+    }
+    .intro {
+        height: 55px;
+    }
+    #start-button {
+        width: 120px;
+        height: 25px;
+        font-size: 9px;
+    }
+    .grid {
+        width: var(--game-width2);
+        height: var(--game-height2);
+    }
+    .score-box, .intro, .start-box, .arrows, .level-select {
+        width: var(--game-width2);
+    }
+    .score, .level, .level-button {
+        font-size: 12px;
+    }
+    .score-box {
+        height: 35px;
+    }    
+    .grid-box {
+        height: var(--game-height2);
+    }
+    .block, .user {
+        width: var(--block-width2);
+        height: var(--block-height2);
+    }
+    .ball {
+        width: 10px;
+        height: 10px;
+    }     
+}
+
+
+@keyframes animate {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+    }
 }

@@ -5,11 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Breakout Game</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Press+Start+2P">
+    <script src="https://kit.fontawesome.com/e61363cb15.js" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div id="score">0</div>
-    <div class="grid"></div>
+    <div class="blank-space"></div>
+    <div class="intro">
+      <h1 class="page-title">Breakout</h1>
+    </div>
+    <div class="start-box">
+      <button id="start-button">Insert Coin</button>
+    </div>    
+    <div class="score-box">
+      <label class="score"> Score: 
+        <span id="score-display">0</span>
+      </label>
+      <label class="level"> Lvl. 
+        <span id="level-display">1</span>
+      </label>
+    </div>    
+    <div class="grid-box">
+      <div class="grid"></div>
+    </div>    
+    <div class="arrows">
+      <i id="left-arrow" class="fa-solid fa-square-caret-left"></i>
+      <i id="right-arrow" class="fa-solid fa-square-caret-right"></i>      
+    </div>
+    <div class="level-select">
+      <button id="level-one-button" class="level-button">Lvl.1</button>
+      <button id="level-two-button" class="level-button">Lvl.2</button>
+      <button id="level-three-button" class="level-button">Lvl.3</button>
 
+    </div>
     <script src="app.js"></script>
   </body>
 </html>
