@@ -93,23 +93,28 @@ html {
 }
 
 .game-grid {
-    height: 90%;
-    width: 100%;   
+    height: 180px;
+    width: 270px;
+    position: absolute;
+    display: flex;
+      
 }
 
 .grid {
     height: 100%;
     width: 100%;
+    display: flex;
+    position: absolute;
+
 }
 
 .message-div {
     font-size: 15px;
     text-transform: uppercase;
     position: relative;
-    top: -120px;
+    top: 40px;
     width: 100%;
-    height: 40%;
-    margin: auto;
+    height: 80px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -272,14 +277,31 @@ html {
     border-radius: 50%;
     margin: 0;
     padding: 0;
-    position: relative;
+    position: absolute;
     background-color: yellow;
+    border: 0;
 }
 
+.obstacle {
+    height: 10px;
+    width: 40px;
+    position: absolute;
+    background-color: fuchsia;
+}
 
+.user {
+    height: 10px;
+    width: 48px;
+    background-color: aqua;
+    position: absolute;
+}
 
-
-
+.block {
+    height: 10px;
+    width: 48px;
+    position: absolute;
+    background-color: salmon;
+}
 
 
 
@@ -308,14 +330,16 @@ html {
     }
     
     .message-div {
-        top: -220px;
+        top: 100px;        
         font-size: 25px;
+        height: 120px;
     }
     #instructions-box {
         font-size: 14px;
     }
     .game-grid {
         height: 340px;
+        width: 500px;
     }
     .joystick {
         height: 100px;
@@ -366,5 +390,22 @@ html {
     }
     .bottom-box {
         height: 100px
+    }
+
+    .ball {
+        height: 25px;
+        width: 25px;
+    }
+    .obstacle {
+        height: 15px;
+        width: 70px;
+    }
+    .block {
+        width: 88px;
+        height: 15px;
+    }
+    .user {
+        width: 80px;
+        height: 15px;
     }
 }
