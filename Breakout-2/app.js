@@ -17,10 +17,10 @@ const obstacle2 = document.createElement('div');
 const heartLeft = document.querySelector('.health-value-1');
 const heartRight = document.querySelector('.health-value-2');
 
-
 let gameStart = false; //pause = true
 let gameOver = false;
 let userSelectedLevel = false;
+let firstPlay = true;
 let pageWidth = window.innerWidth;
 let pageHeight = window.innerHeight;
 
@@ -55,6 +55,8 @@ let currentPosition = userStart;
 
 // adjust grid size based on page size, mobile is default
 function checkPageSize() {
+    xDirection = -2;
+    yDirection = -2;
     if (pageWidth > 750 && pageHeight > 600) {
         pageSizeSmall = false;
         boardHeight = 340;
@@ -62,12 +64,16 @@ function checkPageSize() {
         ballDiameter = 25;
         obstacleHeight = 15;
         obstacleWidth = 70;
-        ballCurrentPosition = ballStartLargeView;
+        ballCurrentPosition = [235, 250];
         obstacle1Position = [70, 180];
         obstacle2Position = [350, 180];
-        currentPosition = userStartLargeView;
+        currentPosition = [210, 300];
         blockHeight = 10;
         blockWidth = 88;
+    } else {
+        ballCurrentPosition = [125, 120];
+        currentPosition = [115, 155];
+
     }
 }
 // check on page load
@@ -84,7 +90,7 @@ class Block {
 }
 
 //all my blocks
-const blocks = [
+const blocksInitial = [
     new Block(5,5),
     new Block(58,5),
     new Block(111,5),
@@ -103,7 +109,7 @@ const blocks = [
 ]
 
 //larger page view blocks
-const blocksLarge = [
+const blocksLargeInitial = [
     new Block(10,10),
     new Block(108,10),
     new Block(206,10),
@@ -121,6 +127,16 @@ const blocksLarge = [
     new Block(402,60)
 ]
 
+let blocks = [];
+let blocksLarge = [];
+
+function setBlocksToInitial() {
+    for (let i = 0; i < 15; i++) {
+        blocks[i] = blocksInitial[i];
+        blocksLarge[i] = blocksLargeInitial[i]
+    }  
+}
+setBlocksToInitial();
 
 
 // allows user to select a level at page load, 
@@ -153,18 +169,25 @@ function sendBack() {
     messageBox.classList.add('send-back');
 }
 
+function sendForward() {
+    levelSelectBox.classList.remove('send-back');
+    instructionsBox.classList.remove('send-back');
+    messageBox.classList.remove('send-back');
+}
+
 // do this when user choses a level, actived by green button
 function levelChosen() {
     const level = selectLevelDisplay.textContent;
     userSelectedLevel = true;
     gameStart = true;
+    gameOver = false;
     checkPageSize();
     sendBack();
-    addBlocks();    
-    addBall();
-    addUser();
+    initializeGame();
+    resetBlocks();
     countDown();    
     toggleSelectLevelListeners();
+    toggleRestartListeners();
     setTimeout(moveBallTimer,3000);        
     setTimeout(moveUserListeners, 3000);
     setTimeout(() => {toggleStartPauseListeners();},3000);
@@ -179,12 +202,41 @@ function levelChosen() {
     }
 }
 
+// initialize game on first play
+function initializeGame() {
+    if (firstPlay === true) {
+        addBlocks();    
+        addBall();
+        addUser();
+    }
+}
+
+//rebuild after restart 
+function resetBlocks() {
+    if (firstPlay === false) {    
+    const allBlocks = Array.from(document.querySelectorAll('.grid-item'))
+    setBlocksToInitial();
+    for (let i = 0; i < 15; i++) {
+        allBlocks[i].classList.add('block');
+    }
+    for (let i = 15; i < 16; i++) {
+        allBlocks[i].classList.add('ball');
+        drawBall();
+    }
+    for (let i = 16; i < 17; i++)
+        allBlocks[i].classList.add('user');
+        drawUser();
+    }
+        
+}
+
 // use arrow buttons to select level, toggle button for other uses
 function toggleSelectLevelListeners() {
     if (userSelectedLevel === false) {
         rightArrowButton.addEventListener('click', selectLevelRight);
         leftArrowButton.addEventListener('click', selectLevelLeft);
         greenStartButton.addEventListener('click', levelChosen);
+        greenStartButton.removeEventListener('click', restartGame);
     }
     if (userSelectedLevel === true) {
         rightArrowButton.removeEventListener('click', selectLevelRight);
@@ -197,21 +249,51 @@ toggleSelectLevelListeners();
 
 // use green button to start and pause game 
 // if user has selected a level and game is not over
+// allows user to start pause after countdown
 function toggleStartPauseListeners() {
     if (
         userSelectedLevel === true &&
         gameOver === false
         ) { 
-            greenStartButton.addEventListener('click', startPause);
+            startPauseStartListening();
         }
 
     if (
         userSelectedLevel === true &&
         gameOver === true
         ) {
-            greenStartButton.removeEventListener('click', startPause);
+            startPauseStopListening();
         }
 }
+
+function startPauseStartListening() {
+    greenStartButton.addEventListener('click', startPause);            
+    redRestartButton.addEventListener('click', restartWarning);
+}
+
+function startPauseStopListening() {
+    greenStartButton.removeEventListener('click', startPause);            
+    redRestartButton.removeEventListener('click', restartWarning);
+}
+
+//toggle green restart button
+// happens immediately after level selected and wherever startpause toggle is used
+function toggleRestartListeners() {
+    if (
+        userSelectedLevel === true &&
+        gameOver === false
+        ) {
+            greenStartButton.removeEventListener('click', restartGame);
+        }
+
+    if (
+        userSelectedLevel === true &&
+        gameOver === true
+        ) {
+            greenStartButton.addEventListener('click', restartGame);
+        }
+}
+
 
 // countdown from 3 on level select
 function countDown() {
@@ -232,7 +314,7 @@ function startPause() {
         instructionsBox.classList.remove('send-back');
         instructionsBox.innerHTML = 'press green to continue';
         moveUserStopListening();        
-    } else {
+    } else {        
         gameStart = true;
         moveBallTimer();
         sendBack();
@@ -241,14 +323,58 @@ function startPause() {
 }
 
 //RESTART
-function resartGame() {
-    const allBlocks = Array.from(document.querySelectorAll('.no-block'))
-    for (let i = 0; i < 15; i++) {        
+function restartGame() {
+    const allBlocks = Array.from(document.querySelectorAll('.grid-item'))
+    const level = selectLevelDisplay.textContent;
+    userSelectedLevel = false;
+    health = 3;
+    clearInterval(timerId);
+    heartLeft.classList.add('fa-heart');
+    heartRight.classList.add('fa-heart');
+    score = 0;
+    scoreValue.innerHTML = score;
+    selectLevelDisplay.innerHTML = 'Lvl.1';
+    messageBox.innerHTML = 'Select Level';
+    instructionsBox.innerHTML = 'Use arrows and green';
+    sendForward();
+    toggleRestartListeners();
+    toggleSelectLevelListeners();
+    for (let i = 0; i < 17; i++) {        
         allBlocks[i].classList.remove('block');      
+        allBlocks[i].classList.remove('user');
+        allBlocks[i].classList.remove('ball'); 
+    }
+    
+    if (level === 'Lvl.2' || level === 'Lvl.3') {
+        for (let i = 17; i < 18; i++) {
+            allBlocks[i].classList.remove('obstacle');
+        }            
+    }
+
+    if (level === 'Lvl.3') {
+        for (let i = 18; i < 19; i++) {
+            allBlocks[i].classList.remove('obstacle');
+        }            
     }
 }
-redRestartButton.addEventListener('click',resartGame)
 
+function restartWarning() {
+    sendForward();
+    selectLevelDisplay.innerHTML = 'NO';
+    messageBox.innerHTML = 'Restart';
+    instructionsBox.innerHTML = 'Are you sure?';
+    confirmRestart();
+}
+
+function toggleRestartChoiceListeners() {
+
+}
+function confirmRestart() {
+    const choice = selectLevelDisplay.textContent;
+    if (choice === 'NO') {
+
+    }
+}
 
 // BLOCKS
 // draw blocks
@@ -256,7 +382,7 @@ function addBlocks() {
     if (pageSizeSmall === true) {
         for (let i = 0; i < blocks.length; i++) {
             const block = document.createElement('div');
-            block.classList.add('block','no-block')
+            block.classList.add('block','grid-item')
             block.style.left = blocks[i].topLeft[0] + 'px'
             block.style.top = blocks[i].topLeft[1] + 'px'
             grid.appendChild(block)
@@ -265,7 +391,7 @@ function addBlocks() {
     } else {
         for (let i = 0; i < blocks.length; i++) {
             const block = document.createElement('div');
-            block.classList.add('block','no-block')
+            block.classList.add('block','grid-item')
             block.style.left = blocksLarge[i].topLeft[0] + 'px'
             block.style.top = blocksLarge[i].topLeft[1] + 'px'
             grid.appendChild(block)
@@ -273,7 +399,6 @@ function addBlocks() {
     }       
 }
 
-//Add blocks after restart
 
 // USER
 // draw user
@@ -283,7 +408,7 @@ function drawUser() {
 }
 // add user
 function addUser() {
-    user.classList.add('user');
+    user.classList.add('user','grid-item');
     drawUser();
     grid.appendChild(user);
 }
@@ -350,7 +475,6 @@ function moveUserListeners() {
     rightArrowButton.addEventListener('click', moveUserRightButton);
 
     document.addEventListener('keydown', moveUser)
-
 }
 
 function moveUserStopListening() {
@@ -367,7 +491,6 @@ function moveUserStopListening() {
     rightArrowButton.removeEventListener('click', moveUserRightButton);
 
     document.removeEventListener('keydown', moveUser)
-
 }
 
 // BALL
@@ -378,7 +501,7 @@ function drawBall() {
 }
 // add ball
 function addBall() {    
-    ball.classList.add('ball');
+    ball.classList.add('ball','grid-item');
     drawBall();
     grid.appendChild(ball);
 }
@@ -404,14 +527,13 @@ function moveBall() {
 function addObstacles() {
     //lvl 2 and 3 share same first obstacle
     const level = selectLevelDisplay.textContent;
-    console.log(level);
     if (level === 'Lvl.2' || level === 'Lvl.3') {
-        obstacle1.classList.add('obstacle');
+        obstacle1.classList.add('obstacle','grid-item');
         drawObstacle1();
         grid.appendChild(obstacle1);
     }
     if (level === 'Lvl.3') {
-        obstacle2.classList.add('obstacle');
+        obstacle2.classList.add('obstacle','grid-item');
         drawObstacle2();
         grid.appendChild(obstacle2);
     }
@@ -526,15 +648,17 @@ function checkForBlocks() {
 
 //check for win
 function checkForWin() {
-    if (blocks.length === 0 || blocksLarge.length === 0) {
+    if (score === 15) {
         gameOver = true;
+        firstPlay = false;
         messageBox.classList.remove('send-back');
         instructionsBox.classList.remove('send-back');
         messageBox.innerHTML = 'YOU WIN!';
         instructionsBox.innerHTML = 'Press green for new level';
         clearInterval(timerId);
         moveUserStopListening(); 
-        toggleStartPauseListeners(); 
+        toggleStartPauseListeners();
+        toggleRestartListeners(); 
 
     }
 }
@@ -544,22 +668,38 @@ function checkForLose() {
     console.log(health)
     if (ballCurrentPosition[1] >= (boardHeight - ballDiameter)) {
         health -= 1;
-        changeDirection();
+        if (health >= 1) {            
+            checkPageSize();
+            drawBall();
+            drawUser();
+            changeDirection();
+            clearInterval(timerId);
+            setTimeout(moveBallTimer, 3000);
+            countDown();
+            moveUserStopListening();
+            setTimeout(moveUserListeners, 3000);
+            startPauseStopListening();
+            setTimeout(startPauseStartListening, 3000);
+        }
+        
         if (health === 2) {
             heartRight.classList.remove('fa-heart');
+            
             
         } if (health === 1) {
             heartLeft.classList.remove('fa-heart');
             
-        } if (health < 0) {
+        } if (health < 1) {
             clearInterval(timerId);
             messageBox.classList.remove('send-back');
             instructionsBox.classList.remove('send-back');
             messageBox.innerHTML = 'You lose';
             instructionsBox.innerHTML = 'Press green for new level';
             gameOver = true;
+            firstPlay = false;
             moveUserStopListening();
             toggleStartPauseListeners(); 
+            toggleRestartListeners();
         }
     }
 }
