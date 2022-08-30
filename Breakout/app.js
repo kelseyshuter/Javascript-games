@@ -178,6 +178,7 @@ function moveUserRightButton() {
 }
 
 
+
 // add ball
 const ball = document.createElement('div')
 ball.classList.add('ball')

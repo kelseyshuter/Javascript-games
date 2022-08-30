@@ -25,6 +25,8 @@ let pageWidth = window.innerWidth;
 let pageHeight = window.innerHeight;
 
 let timerId;
+let moveLeftTimerId;
+let moveRightTimerId;
 let xDirection = -2;
 let yDirection = -2;
 let ballDiameter = 15;
@@ -35,7 +37,7 @@ let obstacleWidth = 40;
 let blockHeight = 10;
 let blockWidth = 48;
 
-let health = 2;
+let health = 3;
 let score = 0;
 
 let pageSizeSmall = true;
@@ -120,6 +122,7 @@ const blocksLarge = [
 ]
 
 
+
 // allows user to select a level at page load, 
 // called by buttons if user has not selected a level yet
 function selectLevelRight() {
@@ -155,15 +158,16 @@ function levelChosen() {
     const level = selectLevelDisplay.textContent;
     userSelectedLevel = true;
     gameStart = true;
-    sendBack();    
-    setTimeout(() => {toggleStartPauseListeners();},3000);
-    toggleSelectLevelListeners();
+    checkPageSize();
+    sendBack();
     addBlocks();    
     addBall();
-    countDown();
-    setTimeout(moveBallTimer,3000);
     addUser();
-    checkPageSize();    
+    countDown();    
+    toggleSelectLevelListeners();
+    setTimeout(moveBallTimer,3000);        
+    setTimeout(moveUserListeners, 3000);
+    setTimeout(() => {toggleStartPauseListeners();},3000);
     if (level === 'Lvl.1') {
         levelDisplay.innerHTML = 'Lvl.1';
     } else if (level === 'Lvl.2') {
@@ -182,7 +186,6 @@ function toggleSelectLevelListeners() {
         leftArrowButton.addEventListener('click', selectLevelLeft);
         greenStartButton.addEventListener('click', levelChosen);
     }
-
     if (userSelectedLevel === true) {
         rightArrowButton.removeEventListener('click', selectLevelRight);
         leftArrowButton.removeEventListener('click', selectLevelLeft);
@@ -201,6 +204,13 @@ function toggleStartPauseListeners() {
         ) { 
             greenStartButton.addEventListener('click', startPause);
         }
+
+    if (
+        userSelectedLevel === true &&
+        gameOver === true
+        ) {
+            greenStartButton.removeEventListener('click', startPause);
+        }
 }
 
 // countdown from 3 on level select
@@ -218,20 +228,35 @@ function startPause() {
         gameStart = false;
         clearInterval(timerId);
         messageBox.classList.remove('send-back');
-        messageBox.innerHTML = 'Paused';        
+        messageBox.innerHTML = 'Paused';
+        instructionsBox.classList.remove('send-back');
+        instructionsBox.innerHTML = 'press green to continue';
+        moveUserStopListening();        
     } else {
         gameStart = true;
         moveBallTimer();
         sendBack();
+        moveUserListeners();
     }
 }
 
+//RESTART
+function resartGame() {
+    const allBlocks = Array.from(document.querySelectorAll('.no-block'))
+    for (let i = 0; i < 15; i++) {        
+        allBlocks[i].classList.remove('block');      
+    }
+}
+redRestartButton.addEventListener('click',resartGame)
+
+
+// BLOCKS
 // draw blocks
 function addBlocks() {
     if (pageSizeSmall === true) {
         for (let i = 0; i < blocks.length; i++) {
             const block = document.createElement('div');
-            block.classList.add('block')
+            block.classList.add('block','no-block')
             block.style.left = blocks[i].topLeft[0] + 'px'
             block.style.top = blocks[i].topLeft[1] + 'px'
             grid.appendChild(block)
@@ -240,7 +265,7 @@ function addBlocks() {
     } else {
         for (let i = 0; i < blocks.length; i++) {
             const block = document.createElement('div');
-            block.classList.add('block')
+            block.classList.add('block','no-block')
             block.style.left = blocksLarge[i].topLeft[0] + 'px'
             block.style.top = blocksLarge[i].topLeft[1] + 'px'
             grid.appendChild(block)
@@ -248,7 +273,9 @@ function addBlocks() {
     }       
 }
 
+//Add blocks after restart
 
+// USER
 // draw user
 function drawUser() {
     user.style.left = currentPosition[0] + 'px';
@@ -261,6 +288,89 @@ function addUser() {
     grid.appendChild(user);
 }
 
+// MOVE USER
+function moveUser(e) {
+    switch(e.key) {
+        case 'ArrowLeft':
+        case 'a':
+            if (currentPosition[0] > 0) {
+                currentPosition[0] -= 10
+                drawUser()                
+            }
+                break;
+        case 'ArrowRight':
+        case 'd':
+            if (currentPosition[0] < boardWidth - blockWidth) {
+                currentPosition[0] += 10
+                drawUser()                
+            }
+                break;
+    }
+}
+
+
+// for buttons
+function moveUserLeftButton() {
+    if (currentPosition[0] > 0) {
+        currentPosition[0] -= 10;
+        drawUser();
+    }
+}
+function moveUserRightButton() {
+    if (currentPosition[0] < boardWidth - blockWidth) {
+        currentPosition[0] += 10;
+        drawUser();
+    }
+}
+
+function moveLeftInterval() {
+    moveLeftTimerId = setInterval(moveUserLeftButton, 50);
+}
+
+function moveRightInterval() {
+    moveLeftTimerId = setInterval(moveUserRightButton, 50);
+}
+
+function stopMovingInterval() {
+    clearInterval(moveLeftTimerId);
+    clearInterval(moveRightTimerId);
+}
+
+function moveUserListeners() {
+    leftArrowButton.addEventListener('mousedown', moveLeftInterval);
+    leftArrowButton.addEventListener('mouseup', stopMovingInterval);
+    leftArrowButton.addEventListener('touchstart', moveLeftInterval);
+    leftArrowButton.addEventListener('touchend', stopMovingInterval);
+    leftArrowButton.addEventListener('click', moveUserLeftButton);
+
+    rightArrowButton.addEventListener('mousedown', moveRightInterval);
+    rightArrowButton.addEventListener('mouseup', stopMovingInterval);
+    rightArrowButton.addEventListener('touchstart', moveRightInterval);
+    rightArrowButton.addEventListener('touchend', stopMovingInterval);
+    rightArrowButton.addEventListener('click', moveUserRightButton);
+
+    document.addEventListener('keydown', moveUser)
+
+}
+
+function moveUserStopListening() {
+    leftArrowButton.removeEventListener('mousedown', moveLeftInterval);
+    leftArrowButton.removeEventListener('mouseup', stopMovingInterval);
+    leftArrowButton.removeEventListener('touchstart', moveLeftInterval);
+    leftArrowButton.removeEventListener('touchend', stopMovingInterval);
+    leftArrowButton.removeEventListener('click', moveUserLeftButton);
+
+    rightArrowButton.removeEventListener('mousedown', moveRightInterval);
+    rightArrowButton.removeEventListener('mouseup', stopMovingInterval);
+    rightArrowButton.removeEventListener('touchstart', moveRightInterval);
+    rightArrowButton.removeEventListener('touchend', stopMovingInterval);
+    rightArrowButton.removeEventListener('click', moveUserRightButton);
+
+    document.removeEventListener('keydown', moveUser)
+
+}
+
+// BALL
 // draw ball
 function drawBall() {
     ball.style.left = ballCurrentPosition[0] + 'px';
@@ -289,6 +399,7 @@ function moveBall() {
     checkForCollisions();
 }
 
+//OBSTACLES
 // add obstacles for lvl 2 and 3
 function addObstacles() {
     //lvl 2 and 3 share same first obstacle
@@ -318,20 +429,18 @@ function drawObstacle2() {
 
 
 
+//COLLISIONS
 
-
-// ball bouces off 3 walls, *bottom wall is gameOver
+// ball bouces off 3 walls, *bottom wall -1 health
 function checkForWalls() {
     if (
         ballCurrentPosition[0] >= (boardWidth - ballDiameter) || 
         ballCurrentPosition[1] <= 0 ||
-        ballCurrentPosition[0] <= 0 ||
-        ballCurrentPosition[1] >= (boardHeight - ballDiameter)
+        ballCurrentPosition[0] <= 0
         ) {
             changeDirection();
     }
 }
-
 
 // ball bounces off obstacles
 // lvl 2 single obstacle, lvl 3 has two
@@ -350,7 +459,6 @@ function checkForObstacles() {
         }
     }
     if (level === 'Lvl.3') {
-        //shifted one obstacle width horiz.
         if (
             (ballCurrentPosition[0] > obstacle2Position[0] - ballDiameter &&
             ballCurrentPosition[0] < obstacle2Position[0] + obstacleWidth) &&
@@ -360,15 +468,112 @@ function checkForObstacles() {
         {
             changeDirection();
         }
-    }
-    
+    }    
 }
+
+//check for user hit
+// left, right, top, bottom
+function checkForUserHit() {
+    if (
+        (ballCurrentPosition[0] > currentPosition[0] - ballDiameter &&
+        ballCurrentPosition[0] < currentPosition[0] + blockWidth) &&
+        (ballCurrentPosition[1] > currentPosition[1] - ballDiameter &&
+        ballCurrentPosition [1] < currentPosition[1] + blockHeight)
+    )
+        {
+            changeDirection();
+        }
+}
+
+//check for  blocks
+function checkForBlocks() {
+    if (pageSizeSmall === true) {
+        for (let i = 0; i < blocks.length; i++) {
+            if (
+                (ballCurrentPosition[0] + ballDiameter > blocks[i].topLeft[0] &&
+                ballCurrentPosition[0] < blocks[i].topRight[0]) &&
+                (ballCurrentPosition[1] > blocks[i].topLeft[1] &&
+                ballCurrentPosition[1] < blocks[i].bottomRight[1])
+            )
+                {
+                    const allBlocks = Array.from(document.querySelectorAll('.block'));
+                    allBlocks[i].classList.remove('block');
+                    blocks.splice(i, 1);
+                    changeDirection();
+                    score++;
+                    scoreValue.innerHTML = score;                    
+                } 
+        }
+    } else if (pageSizeSmall === false) {
+        for (let i = 0; i < blocksLarge.length; i++) {
+            if (
+                (ballCurrentPosition[0] + ballDiameter > blocksLarge[i].topLeft[0] &&
+                ballCurrentPosition[0] < blocksLarge[i].topRight[0]) &&
+                (ballCurrentPosition[1] > blocksLarge[i].topLeft[1] &&
+                ballCurrentPosition[1] < blocksLarge[i].bottomLeft[1])
+            )
+                {
+                    const allBlocks = Array.from(document.querySelectorAll('.block'));
+                    allBlocks[i].classList.remove('block');
+                    blocksLarge.splice(i, 1);
+                    changeDirection();
+                    score++;
+                    scoreValue.innerHTML = score;
+                }
+        }
+    }
+}
+
+//check for win
+function checkForWin() {
+    if (blocks.length === 0 || blocksLarge.length === 0) {
+        gameOver = true;
+        messageBox.classList.remove('send-back');
+        instructionsBox.classList.remove('send-back');
+        messageBox.innerHTML = 'YOU WIN!';
+        instructionsBox.innerHTML = 'Press green for new level';
+        clearInterval(timerId);
+        moveUserStopListening(); 
+        toggleStartPauseListeners(); 
+
+    }
+}
+
+// check for hit bottom, -1 health
+function checkForLose() {
+    console.log(health)
+    if (ballCurrentPosition[1] >= (boardHeight - ballDiameter)) {
+        health -= 1;
+        changeDirection();
+        if (health === 2) {
+            heartRight.classList.remove('fa-heart');
+            
+        } if (health === 1) {
+            heartLeft.classList.remove('fa-heart');
+            
+        } if (health < 0) {
+            clearInterval(timerId);
+            messageBox.classList.remove('send-back');
+            instructionsBox.classList.remove('send-back');
+            messageBox.innerHTML = 'You lose';
+            instructionsBox.innerHTML = 'Press green for new level';
+            gameOver = true;
+            moveUserStopListening();
+            toggleStartPauseListeners(); 
+        }
+    }
+}
+
+
 
 // checks for all possible collisions
 function checkForCollisions() {
     checkForWalls();
     checkForObstacles();
-    
+    checkForUserHit();
+    checkForBlocks();
+    checkForWin();
+    checkForLose();
 }
 
 // changes direction based on current direction
